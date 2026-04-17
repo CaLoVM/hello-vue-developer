@@ -1,6 +1,9 @@
 <script setup>
 import DeveloperRegistration   from "./greetings/presentation/components/developer-registration.vue";
 import {ref} from "vue";
+import DeveloperCountShow from "./greetings/presentation/components/developer-count-show.vue";
+import DeveloperGreeting from "./greetings/presentation/components/developer-greeting.vue";
+import {Developer} from "./greetings/domain/model/developer.entify.js";
 
 const firstName = ref('');
 const lastName = ref('');
@@ -24,7 +27,7 @@ function resetRegisteredDeveloperInfo(){
 
 function updateDeveloperCount(developer){
   const dev = new Developer(developer.firstName, developer.lastName);
-  if (dev.fullName !== 'Uknoen')
+  if (dev.fullName !== 'Unknown')
     developerCount.value++;
 }
 </script>
@@ -34,4 +37,9 @@ function updateDeveloperCount(developer){
   <developer-registration
   @developer-registration="updateRegisteredDeveloperInfo"
   @registration-deferred="updateRegisteredDeveloperInfo"/>
+  <developer-greeting
+    v-if="hasRegistered"
+    :firstName="firstName"
+    :lastName="lastName"/>
+  <developer-count-show :developer-count="developerCount"/>
 </template>
